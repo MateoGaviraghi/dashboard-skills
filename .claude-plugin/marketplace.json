@@ -1,0 +1,12 @@
+{
+  "name": "dashboard-skills",
+  "description": "Skills para mejorar dashboards y sistemas internos con Claude Code.",
+  "owner": { "name": "Mateo Gaviraghi" },
+  "plugins": [
+    {
+      "name": "dashboard",
+      "source": "./",
+      "description": "Diseño con referencias, seguridad por niveles y datos (filtros, búsqueda, paginación, velocidad, alertas)."
+    }
+  ]
+}

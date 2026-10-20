@@ -1,0 +1,8 @@
+{
+  "name": "dashboard",
+  "description": "Tres skills para mejorar un dashboard o sistema interno: diseño con referencias reales, seguridad por niveles y datos (filtros, búsqueda, paginación, velocidad, alertas).",
+  "author": { "name": "Mateo Gaviraghi" },
+  "repository": "https://github.com/MateoGaviraghi/dashboard-skills",
+  "license": "MIT",
+  "keywords": ["dashboard", "diseno", "seguridad", "performance", "filtros", "alertas"]
+}
