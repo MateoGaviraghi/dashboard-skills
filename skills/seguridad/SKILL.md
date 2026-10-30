@@ -41,10 +41,17 @@ Para cada control del nivel (`references/niveles.md`), marcar uno de:
 
 Consultar `references/por-stack.md` para los puntos específicos del stack detectado (Next.js, Supabase, Laravel, Django, Express, etc.).
 
+**Radar de vulnerabilidades publicadas (obligatorio, el usuario no tiene que pedirlo):**
+1. Leer el lockfile (no el `package.json`) y anotar la versión instalada del framework, auth, base de datos, ORM, pagos y SDKs del hosting.
+2. Para cada una, buscar alertas publicadas para esa versión exacta: `gh api "/advisories?ecosystem=npm&affects=<paquete>@<versión>&per_page=20" --jq '.[]|"\(.ghsa_id) \(.severity) \(.published_at[:10]) \(.summary)"'` (ecosistemas: `npm`, `pip`, `composer`, `go`, `rubygems`). Después el audit del gestor: `npm audit --omit=dev` / `pnpm audit --prod` / `composer audit` / `pip-audit`.
+3. Buscar en la web avisos de seguridad recientes del proveedor de hosting, base de datos y auth (blog, changelog o GitHub oficial, con fecha): rotación de claves, defaults inseguros, cambios de configuración.
+4. Ver si el repo tiene alertas automáticas: `gh api repos/<owner>/<repo>/vulnerability-alerts` (204 = Dependabot activo, 404 = apagado). Apagado es un hallazgo MEDIO: "activá Dependabot alerts en Settings → Code security".
+5. Cada alerta entra al reporte del Paso 3 con versión instalada → versión con arreglo y si el sistema cumple la condición de la falla (con archivo:línea). La que no aplica (p. ej. solo self-hosted y el sistema está en Vercel) se lista aparte con el porqué.
+
 Herramientas útiles si están disponibles:
 - `/security-review` (viene con Claude Code) sobre los cambios pendientes.
-- `npm audit --omit=dev` / `pnpm audit` / `composer audit` / `pip-audit` para dependencias con vulnerabilidades conocidas.
 - Buscar secretos en el repo y el historial: `git log -p | grep -iE "(api[_-]?key|secret|password|token)\s*[:=]"` (reportar ubicación, nunca valor).
+- Para una auditoría de dependencias a fondo (paquetes abandonados, scripts de instalación, concentración de publicadores), la skill `supply-chain-risk-auditor` de Trail of Bits (`trailofbits/skills`). Para configuraciones y APIs que invitan al error, `sharp-edges` del mismo repo.
 
 ## Paso 3 — Reportar
 

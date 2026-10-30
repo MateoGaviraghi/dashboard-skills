@@ -63,6 +63,8 @@ Si el usuario dice "todo", proponer un orden: primero el layout general (sidebar
 - **Abrir cada link y verificar que funciona y muestra lo que se dice.** Link roto o que no muestra el componente = se descarta.
 - Variedad real: no 7 versiones de lo mismo. Mezclar densidades y enfoques (ej: tabla densa tipo Linear, tabla con cards tipo Stripe, tabla con panel lateral de detalle).
 - Pasar cada candidata por `references/reglas-dashboard.md`: si rompe una regla (ej: usa rojo como decoración), se descarta o se aclara qué se ajustaría.
+- **No quedarse en la primera idea.** Entre las 5 a 7 tiene que haber al menos 3 enfoques de verdad distintos (densidad, estructura, cómo se muestra el dato), no variaciones de color de la misma pantalla.
+- Si está instalada la skill `design-taste-frontend` (repo `leonxlnx/taste-skill`), leer su `references/app-screens.md` y pasar cada candidata también por esas reglas (color en el dato y no en el marco, KPIs como tipografía y no como tarjetas con ícono, superficies planas, tablas de líneas y alineación). Para una pantalla nueva desde cero, su `scripts/draw.mjs --app` reparte direcciones para elegir.
 
 ## Paso 3 — Presentar
 
@@ -103,6 +105,10 @@ Más: componentes nuevos que hacen falta (y si la librería de UI ya los tiene),
 ## Paso 7 — Verificar (el que construye, antes de reportar)
 
 Abrir la pantalla a **375 px** (celular), **1440 px** (notebook) y **1920 px** (monitor). Revisar: nada se corta ni se superpone, la tabla tiene scroll horizontal o se transforma en celular, los estados vacío/cargando/error se ven, el foco de teclado se ve, no hay errores en consola. Si hay herramienta de navegador o Playwright disponible, sacar las 3 capturas. Si algo falla, se arregla antes de reportar.
+
+Después, dos pruebas más:
+- **Peor caso de datos.** Cargar la pantalla con lo que de verdad aparece en un sistema: un nombre de 60 caracteres, un email sin espacios, un nombre de una letra, campos vacíos, cero filas, 10.000 filas, montos enormes y negativos, texto no latino, emoji. Nada se corta sin aviso, nada empuja el layout, cero filas muestra el estado vacío. Si está instalada la skill `break-ui` (repo `emilkowalski/skills`), usarla.
+- **Crítica de jurado.** Mirar las capturas como lo haría un diseñador senior que no la hizo: ¿se entiende en 5 segundos qué es lo importante?, ¿hay algo que esté solo para decorar?, ¿el dato manda sobre el marco? Si está instalada `design-taste-frontend`, correr su `scripts/inspect.mjs --app` sobre la pantalla. Lo que no pasa se arregla antes de reportar.
 
 ## Paso 8 — Reportar
 
